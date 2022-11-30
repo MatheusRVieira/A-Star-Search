@@ -27,6 +27,20 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
     return std::move(contents);
 }
 
+bool checkRange(float &value){
+  if(value < 0 || value > 100) return false;
+  else return true;
+}
+
+float getInput(){
+  float value;
+  std::cin >> value;
+  while(checkRange(value) != true){
+      std::cout << "Out-of-range input. Enter a value in the range [0, 100]: ";
+      std::cin >> value;
+  }
+}
+
 int main(int argc, const char **argv)
 {    
     std::string osm_data_file = "";
@@ -52,16 +66,17 @@ int main(int argc, const char **argv)
             osm_data = std::move(*data);
     }
 
-    std::cout << "Please, enter:\n";
 	float start_x, start_y, end_x, end_y;
+    std::cout << "Please, enter:\n";
     std::cout << "start_x value: ";
-  	std::cin >> start_x;
+    start_x = getInput();
     std::cout << "start_y value: ";
-    std::cin >> start_y;
+    start_y = getInput();
     std::cout << "end_x value: ";
-    std::cin >> end_x;
+    end_x = getInput();
     std::cout << "end_y value: ";
-    std::cin >> end_y;
+    end_y = getInput();
+
     std::cout << "\nProcessing...\n ";
     // Build Model.
     RouteModel model{osm_data};
